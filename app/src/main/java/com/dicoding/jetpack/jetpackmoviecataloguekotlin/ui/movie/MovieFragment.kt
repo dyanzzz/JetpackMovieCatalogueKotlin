@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.app.ShareCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dicoding.jetpack.jetpackmoviecataloguekotlin.R
 import com.dicoding.jetpack.jetpackmoviecataloguekotlin.adapter.MovieAdapter
@@ -14,6 +15,7 @@ import com.dicoding.jetpack.jetpackmoviecataloguekotlin.data.MovieEntity
 import com.dicoding.jetpack.jetpackmoviecataloguekotlin.databinding.FragmentMovieBinding
 import com.dicoding.jetpack.jetpackmoviecataloguekotlin.utils.DataDummy
 import com.dicoding.jetpack.jetpackmoviecataloguekotlin.utils.MovieCallback
+import com.dicoding.jetpack.jetpackmoviecataloguekotlin.viewmodel.MovieViewModel
 
 class MovieFragment : Fragment(), MovieCallback {
 
@@ -28,7 +30,9 @@ class MovieFragment : Fragment(), MovieCallback {
         super.onViewCreated(view, savedInstanceState)
 
         if(activity != null){
-            val movies = DataDummy.generateDummyMovie("movie")
+            val viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())[MovieViewModel::class.java]
+            val movies = viewModel.getMovies()
+
             val movieAdapter = MovieAdapter(this)
             movieAdapter.setMovies(movies)
 
