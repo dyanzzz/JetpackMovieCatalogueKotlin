@@ -12,7 +12,7 @@ class DetailViewModel(private val movieRepository: MovieRepository) : ViewModel(
         this.movieId = movieId
     }
 
-    fun getMovie2(): MovieEntity{
+    fun getMovieOld(): MovieEntity{
         lateinit var movie: MovieEntity
         val movieEntities = DataDummy.generateDummyMovie("movie")
 
