@@ -13,9 +13,9 @@ import com.dicoding.jetpack.jetpackmoviecataloguekotlin.R
 import com.dicoding.jetpack.jetpackmoviecataloguekotlin.adapter.MovieAdapter
 import com.dicoding.jetpack.jetpackmoviecataloguekotlin.data.MovieEntity
 import com.dicoding.jetpack.jetpackmoviecataloguekotlin.databinding.FragmentMovieBinding
-import com.dicoding.jetpack.jetpackmoviecataloguekotlin.utils.DataDummy
 import com.dicoding.jetpack.jetpackmoviecataloguekotlin.utils.MovieCallback
 import com.dicoding.jetpack.jetpackmoviecataloguekotlin.viewmodel.TvShowViewModel
+import com.dicoding.jetpack.jetpackmoviecataloguekotlin.viewmodel.ViewModelFactory
 
 class TvShowFragment : Fragment(), MovieCallback {
 
@@ -30,7 +30,9 @@ class TvShowFragment : Fragment(), MovieCallback {
         super.onViewCreated(view, savedInstanceState)
 
         if(activity != null){
-            val viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())[TvShowViewModel::class.java]
+            val factory = ViewModelFactory.getInstance(requireActivity())
+            //val viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())[TvShowViewModel::class.java]
+            val viewModel = ViewModelProvider(this, factory)[TvShowViewModel::class.java]
             val tv = viewModel.getTvShow()
 
             val tvShowAdapter = MovieAdapter(this)

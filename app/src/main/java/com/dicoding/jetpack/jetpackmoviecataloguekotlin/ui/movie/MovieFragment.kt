@@ -13,9 +13,9 @@ import com.dicoding.jetpack.jetpackmoviecataloguekotlin.R
 import com.dicoding.jetpack.jetpackmoviecataloguekotlin.adapter.MovieAdapter
 import com.dicoding.jetpack.jetpackmoviecataloguekotlin.data.MovieEntity
 import com.dicoding.jetpack.jetpackmoviecataloguekotlin.databinding.FragmentMovieBinding
-import com.dicoding.jetpack.jetpackmoviecataloguekotlin.utils.DataDummy
 import com.dicoding.jetpack.jetpackmoviecataloguekotlin.utils.MovieCallback
 import com.dicoding.jetpack.jetpackmoviecataloguekotlin.viewmodel.MovieViewModel
+import com.dicoding.jetpack.jetpackmoviecataloguekotlin.viewmodel.ViewModelFactory
 
 class MovieFragment : Fragment(), MovieCallback {
 
@@ -30,7 +30,10 @@ class MovieFragment : Fragment(), MovieCallback {
         super.onViewCreated(view, savedInstanceState)
 
         if(activity != null){
-            val viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())[MovieViewModel::class.java]
+            val factory = ViewModelFactory.getInstance(requireActivity())
+            //val viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())[MovieViewModel::class.java]
+            val viewModel = ViewModelProvider(this, factory)[MovieViewModel::class.java]
+
             val movies = viewModel.getMovies()
 
             val movieAdapter = MovieAdapter(this)

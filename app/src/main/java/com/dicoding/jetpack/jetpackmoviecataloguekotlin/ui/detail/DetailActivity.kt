@@ -2,17 +2,16 @@ package com.dicoding.jetpack.jetpackmoviecataloguekotlin.ui.detail
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
+import com.dicoding.jetpack.jetpackmoviecataloguekotlin.BuildConfig
 import com.dicoding.jetpack.jetpackmoviecataloguekotlin.R
 import com.dicoding.jetpack.jetpackmoviecataloguekotlin.data.MovieEntity
 import com.dicoding.jetpack.jetpackmoviecataloguekotlin.databinding.ActivityDetailBinding
-import com.dicoding.jetpack.jetpackmoviecataloguekotlin.utils.DataDummy
 import com.dicoding.jetpack.jetpackmoviecataloguekotlin.viewmodel.DetailViewModel
+import com.dicoding.jetpack.jetpackmoviecataloguekotlin.viewmodel.ViewModelFactory
 
 class DetailActivity : AppCompatActivity() {
 
@@ -31,29 +30,33 @@ class DetailActivity : AppCompatActivity() {
         setSupportActionBar(activityDetailBinding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        val viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())[DetailViewModel::class.java]
+        val factory = ViewModelFactory.getInstance(this)
+        val viewModel = ViewModelProvider(this, factory)[DetailViewModel::class.java]
 
         val extras = intent.extras
         if(extras != null){
-            val movieId = extras.getString(EXTRA_MOVIE)
-            Log.d("TAG", movieId.toString())
+            val movie = intent.getParcelableExtra<MovieEntity>(EXTRA_MOVIE) as MovieEntity
+            //val movie = extras.getString(EXTRA_MOVIE)
 
-            if(movieId != null) {
-                viewModel.setSelectedMovie(movieId)
-                populateMovie(viewModel.getMovie() as MovieEntity)
-                /*for (movie in DataDummy.generateDummyMovie("movie")){
-                    if(movie.movieId == movieId){
-                        populateMovie(movie)
-                    }else{
-                        for (tv in DataDummy.generateDummyMovie("tv")){
-                            if(tv.movieId == movieId){
-                                populateMovie(tv)
-                            }
+            viewModel.setSelectedMovie(movie.movieId)
+            if(movie.category == "movie") {
+                populateMovie(viewModel.getMovie())
+            }else{
+                populateMovie(viewModel.getTv())
+            }
+
+            /*
+                for (movie in DataDummy.generateDummyMovie("movie")){
+                if(movie.movieId == movieId){
+                    populateMovie(movie)
+                }else{
+                    for (tv in DataDummy.generateDummyMovie("tv")){
+                        if(tv.movieId == movieId){
+                            populateMovie(tv)
                         }
                     }
                 }
-                 */
-            }
+            */
 
         }
 
@@ -67,7 +70,7 @@ class DetailActivity : AppCompatActivity() {
         activityDetailBinding.textTag.text = category
 
         Glide.with(this)
-                .load(movie.imagePath)
+            .load(BuildConfig.BASE_URL_IMG_HIGHT +"/"+ movie.imagePath)
                 .transform(RoundedCorners(20))
                 .apply(RequestOptions.placeholderOf(R.drawable.ic_loading)
                         .error(R.drawable.ic_error))

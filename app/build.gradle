@@ -17,6 +17,12 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
+
+        buildConfigField "String", "API_KEY", "\"03b8bc1a8bedee74ec1f1fd81b3b39ff\""
+        buildConfigField "String", "BASE_URL", "\"https://api.themoviedb.org/3/\""
+        buildConfigField "String", "BASE_URL_IMG", "\"https://image.tmdb.org/t/p/w185/\""
+        buildConfigField "String", "BASE_URL_IMG_HIGHT", "\"https://image.tmdb.org/t/p/w500/\""
+        buildConfigField "String", "BASE_URL_SEARCH", "\"https://api.themoviedb.org/3/search/\""
     }
 
     buildTypes {
@@ -50,9 +56,9 @@ dependencies {
     implementation "androidx.recyclerview:recyclerview:$recyclerViewVersion"
     implementation "com.google.android.material:material:$materialVersion"
     implementation "com.github.bumptech.glide:glide:$glideVersion"
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.3.4'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.3.4'
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation "androidx.navigation:navigation-fragment-ktx:$navigationKtx"
+    implementation "androidx.navigation:navigation-ui-ktx:$navigationKtx"
+    implementation "androidx.legacy:legacy-support-v4:$androidXLegacy"
 
     //testing
     testImplementation "junit:junit:$junitVersion"
