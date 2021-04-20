@@ -34,10 +34,21 @@ class MovieFragment : Fragment(), MovieCallback {
             //val viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())[MovieViewModel::class.java]
             val viewModel = ViewModelProvider(this, factory)[MovieViewModel::class.java]
 
+            val movieAdapter = MovieAdapter(this)
+
+            fragmentMovieBinding.progressBar.visibility = View.VISIBLE
+            viewModel.getMovies().observe(viewLifecycleOwner, { movies ->
+                fragmentMovieBinding.progressBar.visibility = View.GONE
+                movieAdapter.setMovies(movies)
+                movieAdapter.notifyDataSetChanged()
+            })
+
+            /*
             val movies = viewModel.getMovies()
 
             val movieAdapter = MovieAdapter(this)
             movieAdapter.setMovies(movies)
+             */
 
             with(fragmentMovieBinding.rvMovie){
                 layoutManager = LinearLayoutManager(context)

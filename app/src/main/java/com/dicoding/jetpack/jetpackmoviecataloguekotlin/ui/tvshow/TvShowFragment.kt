@@ -33,10 +33,22 @@ class TvShowFragment : Fragment(), MovieCallback {
             val factory = ViewModelFactory.getInstance(requireActivity())
             //val viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())[TvShowViewModel::class.java]
             val viewModel = ViewModelProvider(this, factory)[TvShowViewModel::class.java]
+
+            val tvShowAdapter = MovieAdapter(this)
+
+            fragmentMovieBinding.progressBar.visibility = View.VISIBLE
+            viewModel.getTvShow().observe(viewLifecycleOwner, { tv ->
+                fragmentMovieBinding.progressBar.visibility = View.GONE
+                tvShowAdapter.setMovies(tv)
+                tvShowAdapter.notifyDataSetChanged()
+            })
+
+            /*
             val tv = viewModel.getTvShow()
 
             val tvShowAdapter = MovieAdapter(this)
             tvShowAdapter.setMovies(tv)
+             */
 
             with(fragmentMovieBinding.rvMovie){
                 layoutManager = LinearLayoutManager(context)

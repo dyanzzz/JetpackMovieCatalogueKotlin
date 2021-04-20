@@ -2,6 +2,7 @@ package com.dicoding.jetpack.jetpackmoviecataloguekotlin.ui.detail
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
@@ -38,12 +39,32 @@ class DetailActivity : AppCompatActivity() {
             val movie = intent.getParcelableExtra<MovieEntity>(EXTRA_MOVIE) as MovieEntity
             //val movie = extras.getString(EXTRA_MOVIE)
 
+            activityDetailBinding.progressBar.visibility = View.VISIBLE
+            activityDetailBinding.content.visibility = View.INVISIBLE
+
             viewModel.setSelectedMovie(movie.movieId)
+
+            if (movie.category == "movie") {
+                viewModel.getMovie().observe(this, { movies ->
+                    activityDetailBinding.progressBar.visibility = View.GONE
+                    activityDetailBinding.content.visibility = View.VISIBLE
+                    populateMovie(movies)
+                })
+            } else {
+                viewModel.getTv().observe(this, { tvShows ->
+                    activityDetailBinding.progressBar.visibility = View.GONE
+                    activityDetailBinding.content.visibility = View.VISIBLE
+                    populateMovie(tvShows)
+                })
+            }
+
+            /*
             if(movie.category == "movie") {
                 populateMovie(viewModel.getMovie())
             }else{
                 populateMovie(viewModel.getTv())
             }
+             */
 
             /*
                 for (movie in DataDummy.generateDummyMovie("movie")){

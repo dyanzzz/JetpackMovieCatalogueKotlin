@@ -38,6 +38,10 @@ ext {
     navigationKtx = '2.3.5'
     androidXLegacy = '1.0.0'
 
+    // connection
+    retrofit = '2.9.0'
+    okhttp = '4.9.1'
+
     //testing
     junitVersion = '4.13.2'
     junitExtversion = '1.1.2'

@@ -1,5 +1,6 @@
 package com.dicoding.jetpack.jetpackmoviecataloguekotlin.viewmodel
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.dicoding.jetpack.jetpackmoviecataloguekotlin.data.MovieEntity
 import com.dicoding.jetpack.jetpackmoviecataloguekotlin.data.source.MovieRepository
@@ -32,7 +33,9 @@ class DetailViewModel(private val movieRepository: MovieRepository) : ViewModel(
         return movie
     }
 
-    fun getMovie(): MovieEntity = movieRepository.getMovieWithId(movieId)
+    //fun getMovie(): MovieEntity = movieRepository.getMovieWithId(movieId)
+    fun getMovie(): LiveData<MovieEntity> = movieRepository.getMovieWithId(movieId)
 
-    fun getTv(): MovieEntity = movieRepository.getTvShowWithId(movieId)
+    //fun getTv(): MovieEntity = movieRepository.getTvShowWithId(movieId)
+    fun getTv(): LiveData<MovieEntity> = movieRepository.getTvShowWithId(movieId)
 }
